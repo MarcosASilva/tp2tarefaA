@@ -3,6 +3,7 @@ typedef struct cruzada{
     int linha;
     int coluna;
     int numOcorrencias;
+    int numRec;
 
 }tipoCruzada;
 
