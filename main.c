@@ -7,7 +7,7 @@ int main()
 {
 
     char **m, **matriz, palavra[40], nomeArq[20];
-    int exibeStats = statsOn;
+    int exibeStats = statsOff;
     FILE *arq;
     system("clear");
 
@@ -38,11 +38,12 @@ int main()
     printf("========================== Caça-Palavras Backtracking ==========================\n");
     printf("Numero de ocorrencias da palavra procurada: %d\n", cruzada.numOcorrencias);
     imprime(m, cruzada.linha, cruzada.coluna);
-    printf("\n");
-    printf("\n");
-    printf("\n");
+
     if (exibeStats)
     {
+        printf("\n");
+        printf("\n");
+        printf("\n");
         printf("================== Modo Análise ==================\n");
         printf("Numero de chamadas recursivas: %d\n", cruzada.numRec);
     }
