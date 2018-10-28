@@ -48,17 +48,17 @@ void imprime(char **m, int c, int l)
         printf("\n");
     }
 }
-void leArquivo(tipoCruzada *c, char **m)
+void leArquivo(tipoCruzada *c, char **m, char *nomeArq)
 {
     FILE *arq;
     int i, j;
     int linha, coluna;
     char car;
-    arq = fopen("arq.txt", "r");
+    arq = fopen(nomeArq, "r");
 
     if (arq == NULL)
     {
-        printf("N�o foi possivel abrir o arquivo desejado!\n");
+        printf("Nao foi possivel abrir o arquivo desejado!\n");
         return;
     }
     else
@@ -80,11 +80,11 @@ void leArquivo(tipoCruzada *c, char **m)
         }
     }
 
-    //imprime(c->matriz, c->linha, c->coluna);
+    
 }
-int valida(int linha, int coluna, int x, int y, int tamPalavra, int posPalavra)
+int valida(int linha, int coluna, int x, int y)
 {
-    if (x < linha && y < coluna && posPalavra < tamPalavra && x >= 0 && y >= 0)
+    if (x < linha && y < coluna && x >= 0 && y >= 0)
         return 1;
     return 0;
 }
@@ -92,17 +92,14 @@ int valida(int linha, int coluna, int x, int y, int tamPalavra, int posPalavra)
 int procura(tipoCruzada *c, char **m, char *nome, int x, int y, int posPalavra, int direcao)
 {
     c->numRec++;
-    //printf("%d - %d\n", x, y);
-    // printf("direcao = %d\n", direcao);
-//printf("%d\n", c->numOcorrencias);
+
     if (posPalavra == strlen(nome) - 1)
     {
         m[x][y] = nome[posPalavra];
-        if (c->matriz[x][y] == nome[posPalavra])
+        if (c->matriz[x][y] == nome[posPalavra])//encontrou a ultima posicao da palavra, verifica se e valido e encerra o backtracking para aquela palavra 
         {
-            printf("%d - %d\n", x+2, y+1);
+            //printf("%d - %d\n", x+2, y+1);
             c->numOcorrencias++;
-            printf("%d\n", c->numOcorrencias);
             return 1;
         }
 
@@ -110,71 +107,40 @@ int procura(tipoCruzada *c, char **m, char *nome, int x, int y, int posPalavra, 
         return 0;
     }
 
-    if (valida(c->linha, c->coluna, x, y, strlen(nome), posPalavra))
+    if (valida(c->linha, c->coluna, x, y))
     {
-       /* if (y != (c->coluna - 1))
-        {
 
-            procura(c, m, nome, x, y + 1, 0, 0);
-        }
-        else
-        {
-
-            procura(c, m, nome, x + 1, 0, 0, 0); //Movimento para direita
-        }
-*/
         if (c->matriz[x][y] == nome[posPalavra])
         {
             m[x][y] = nome[posPalavra];
-            if (direcao == 0)
+            if (direcao == 0)//movimento inicial para a posicao x, y 
             {
-                if (procura(c, m, nome, x, y + 1, posPalavra + 1, 1))
+                if (procura(c, m, nome, x, y + 1, posPalavra + 1, 1))//Movimenta para o lado direito
                     return 1;
-                //procura(c, m, nome, x, y - 1,  posPalavra+1, 2);
-                if (procura(c, m, nome, x + 1, y, posPalavra + 1, 3))
+                if (procura(c, m, nome, x + 1, y, posPalavra + 1, 3))//Movimenta para baixo
                     return 1;
-                if (procura(c, m, nome, x, y - 1, posPalavra + 1, 1))
+                if (procura(c, m, nome, x, y - 1, posPalavra + 1, 1))//Movimenta para o lado esquerdo
                     return 1;
             }
-            if (direcao == 1)
+            if (direcao == 1)//movimento para um dos lados
             {
-                // procura(c, m, nome, x, y + 1, posPalavra+1, 1);
-                if (procura(c, m, nome, x + 1, y, posPalavra + 1, 3))
+                if (procura(c, m, nome, x + 1, y, posPalavra + 1, 3))//Movimenta para baixo
                     return 1;
             }
-            // if(direcao==2)
-            // {
-            //     //procura(c, m, nome, x, y + 1, posPalavra+1, 1);
-            //     //procura(c, m, nome, x, y - 1,  posPalavra+1, 2);
-            //     if(procura(c, m, nome, x+1, y, posPalavra+1, 3))
-            //         return 1;
 
-            // }
-            if (direcao == 3)
+            if (direcao == 3)//movimento para baixo
             {
-                if (procura(c, m, nome, x, y - 1, posPalavra + 1, 1))
+                if (procura(c, m, nome, x, y - 1, posPalavra + 1, 1))//Movimenta para o lado esquerdo
                     return 1;
-                if (procura(c, m, nome, x, y + 1, posPalavra + 1, 1))
+                if (procura(c, m, nome, x, y + 1, posPalavra + 1, 1))//Movimenta para o lado direito
                     return 1;
-                //procura(c, m, nome, x, y - 1,  posPalavra+1, 2);
-                //procura(c, m, nome, x+1, y,  posPalavra+1, 3);
+   
             }
+            
             m[x][y] = '*';
             return 0;
         }
-        /*else
-        {
-            if (y != (c->coluna - 1))
-            {
 
-                procura(c, m, nome, x, y + 1, 0, 0);
-            }
-            else
-            {
-
-                procura(c, m, nome, x + 1, 0, 0, 0); //Movimento para direita
-            }
-        }*/
     }
     return 0;
 }

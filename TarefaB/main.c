@@ -6,6 +6,7 @@ int main(){
 int i, j;
 tipoSudoku sudoku;
 leArquivo(&sudoku);
+solucionaSudoku(&sudoku);
 imprime(&sudoku);
 
 

@@ -23,8 +23,8 @@ void leArquivo(tipoSudoku *s)
             {
                 for (j = 0; j < N; j++)
                 {
-                    fscanf(arq, "%c ", &car);
-                    s->matrizS[i][j] = car;
+                    fscanf(arq, "%c", &car);
+                    s->matrizS[i][j] = atoi(&car);
                 }
             }
         }
@@ -38,7 +38,7 @@ void imprime(tipoSudoku *s)
 
         for (j = 0; j < N; j++)
         {
-            printf("%c", s->matrizS[i][j]);
+            printf("%d", s->matrizS[i][j]);
         }
         printf("\n");
     }
@@ -82,17 +82,40 @@ int valida(tipoSudoku *s, int num, int col, int lin)
         return 1;
     return 0;
 }
-int encontraVazio(tipoSudoku *s){
-    int i, j;
-    for(i=0;i<N;i++0){
-        for(j=0;j<N;j++){
-            if(s->matrizS==0)
-            return 1;
+int encontraVazio(tipoSudoku *s)
+{
+    int i,j;
+   
+    for (i = 0; i < N; i++ )
+
+    {
+        for (j = 0; j < N; j++)
+        {
+            //printf("%d - %d - %d\n",i,j,s->matrizS[i][j]);
+            if (s->matrizS[i][j] == 0)
+                return 1;
         }
     }
     return 0;
-
 }
-int solucionaSudoku(tipoSudoku *s){
-    int i,j;
+int solucionaSudoku(tipoSudoku *s)
+{
+    int i, j,num;
+
+    if(!encontraVazio(s)){
+        return 1;
+    }
+    //printf(" oi %d %d\n",i,j);
+
+    for(num=0;num<=9;num++){
+        if(valida(s,num,j,i)){
+            s->matrizS[i][j] == num;
+            if(solucionaSudoku(s)){
+                return 1;
+            }
+            s->matrizS[i][j] == 0;
+        }
+    }
+    return 0;
+    
 }

@@ -92,9 +92,7 @@ int valida(int linha, int coluna, int x, int y, int tamPalavra, int posPalavra)
 int procura(tipoCruzada *c, char **m, char *nome, int x, int y, int posPalavra, int direcao)
 {
     c->numRec++;
-    //printf("%d - %d\n", x, y);
-    // printf("direcao = %d\n", direcao);
-//printf("%d\n", c->numOcorrencias);
+
     if (posPalavra == strlen(nome) - 1)
     {
         m[x][y] = nome[posPalavra];
@@ -112,17 +110,7 @@ int procura(tipoCruzada *c, char **m, char *nome, int x, int y, int posPalavra, 
 
     if (valida(c->linha, c->coluna, x, y, strlen(nome), posPalavra))
     {
-       /* if (y != (c->coluna - 1))
-        {
 
-            procura(c, m, nome, x, y + 1, 0, 0);
-        }
-        else
-        {
-
-            procura(c, m, nome, x + 1, 0, 0, 0); //Movimento para direita
-        }
-*/
         if (c->matriz[x][y] == nome[posPalavra])
         {
             m[x][y] = nome[posPalavra];
@@ -142,14 +130,7 @@ int procura(tipoCruzada *c, char **m, char *nome, int x, int y, int posPalavra, 
                 if (procura(c, m, nome, x + 1, y, posPalavra + 1, 3))
                     return 1;
             }
-            // if(direcao==2)
-            // {
-            //     //procura(c, m, nome, x, y + 1, posPalavra+1, 1);
-            //     //procura(c, m, nome, x, y - 1,  posPalavra+1, 2);
-            //     if(procura(c, m, nome, x+1, y, posPalavra+1, 3))
-            //         return 1;
 
-            // }
             if (direcao == 3)
             {
                 if (procura(c, m, nome, x, y - 1, posPalavra + 1, 1))
@@ -162,19 +143,7 @@ int procura(tipoCruzada *c, char **m, char *nome, int x, int y, int posPalavra, 
             m[x][y] = '*';
             return 0;
         }
-        /*else
-        {
-            if (y != (c->coluna - 1))
-            {
 
-                procura(c, m, nome, x, y + 1, 0, 0);
-            }
-            else
-            {
-
-                procura(c, m, nome, x + 1, 0, 0, 0); //Movimento para direita
-            }
-        }*/
     }
     return 0;
 }
